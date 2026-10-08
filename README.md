@@ -3,7 +3,7 @@
 A Spring Boot REST API for managing customer support tickets, with AI-based
 category and priority classification (in progress).
 
-The project code is in the [`ticket-triage`](ticket-triage) folder.
+The project code is in the [`ticket-trinage`](ticket-trinage) folder.
 
 ## Tech stack
 Java 17, Spring Boot, Spring Data JPA, MySQL, Swagger
