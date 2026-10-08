@@ -1,4 +1,4 @@
-package com.guru.ticket_trinage;
+package com.guru.ticket_triage;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;

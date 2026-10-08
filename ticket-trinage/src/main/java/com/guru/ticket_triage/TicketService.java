@@ -1,4 +1,4 @@
-package com.guru.ticket_trinage;
+package com.guru.ticket_triage;
 
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;

@@ -1,4 +1,4 @@
-package com.guru.ticket_trinage;
+package com.guru.ticket_triage;
 
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

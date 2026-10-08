@@ -1,13 +1,13 @@
-package com.guru.ticket_trinage;
+package com.guru.ticket_triage;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class TicketTrinageApplication {
+public class TicketTriageApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TicketTrinageApplication.class, args);
+		SpringApplication.run(TicketTriageApplication.class, args);
 	}
 
 }

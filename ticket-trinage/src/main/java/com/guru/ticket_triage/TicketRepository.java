@@ -1,4 +1,4 @@
-package com.guru.ticket_trinage;
+package com.guru.ticket_triage;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.guru.ticket_trinage;
+package com.guru.ticket_triage;
 
 public class TicketNotFoundException extends RuntimeException {
     public TicketNotFoundException(Long id) {
