@@ -5,7 +5,6 @@ created, it is saved first, then classified by an LLM (Gemini) into a category
 and a priority, with a suggested reply. If the AI call fails, the ticket is
 still saved, so no customer message is lost.
 
-The project code is in the [project folder](ticket-trinage).
 
 ## Tech stack
 
