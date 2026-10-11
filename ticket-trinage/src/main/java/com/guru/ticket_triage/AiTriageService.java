@@ -22,7 +22,13 @@ public class AiTriageService {
 
     private static final Logger log = LoggerFactory.getLogger(AiTriageService.class);
     private static final int MAX_ATTEMPTS = 2;
+    private static final long RETRY_DELAY_MS = 2000;
 
+    private static class TemporaryAiException extends RuntimeException {
+        TemporaryAiException(String message) {
+            super(message);
+        }
+    }
     private static final String INSTRUCTION =
             "You triage customer support tickets. Classify the ticket into a category "
             + "and a priority (HIGH for payment problems, outages or security issues; "
@@ -71,8 +77,19 @@ public class AiTriageService {
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 return Optional.empty();
+            } catch (TemporaryAiException e) {
+                log.warn("AI triage attempt {} of {} failed (temporary): {}", attempt, MAX_ATTEMPTS, e.getMessage());
+                if (attempt < MAX_ATTEMPTS) {
+                    try {
+                        Thread.sleep(RETRY_DELAY_MS);
+                    } catch (InterruptedException ie) {
+                        Thread.currentThread().interrupt();
+                        return Optional.empty();
+                    }
+                }
             } catch (Exception e) {
-                log.warn("AI triage attempt {} of {} failed: {}", attempt, MAX_ATTEMPTS, e.getMessage());
+                log.warn("AI triage failed, not retrying: {}", e.getMessage());
+                return Optional.empty();
             }
         }
         return Optional.empty();
@@ -93,7 +110,11 @@ public class AiTriageService {
         if (response.statusCode() != 200) {
             String reply = response.body();
             String shortBody = reply.length() > 300 ? reply.substring(0, 300) : reply;
-            throw new IllegalStateException("Gemini returned HTTP " + response.statusCode() + ": " + shortBody);
+            String text = "Gemini returned HTTP " + response.statusCode() + ": " + shortBody;
+            if (response.statusCode() == 429 || response.statusCode() >= 500) {
+                throw new TemporaryAiException(text);
+            }
+            throw new IllegalStateException(text);
         }
 
         GeminiResponse parsed = jsonMapper.readValue(response.body(), GeminiResponse.class);
